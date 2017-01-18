@@ -1,0 +1,148 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using BootstrapSite1.Models;
+using PagedList;
+
+namespace BootstrapSite1.Controllers
+{
+    public class KanalisController : Controller
+    {
+        private Model1 db = new Model1();
+
+        // GET: Kanalis
+        public ViewResult Index(string currentFilter, string searchString, int? page)
+        {
+            var kanalis = db.Kanalis.Include(k => k.VrsteKanala);
+            
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(kanalis.OrderBy(i => i.NazivKanala).ToPagedList(pageNumber, pageSize));
+        }
+
+        // GET: Kanalis/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kanali kanali =  db.Kanalis.Find(id);
+            if (kanali == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(kanali);
+        }
+
+        // GET: Kanalis/Create
+        public ActionResult Create()
+        {
+            ViewBag.VrsteKanalaID = new SelectList(db.VrsteKanalas, "VrsteKanalaID", "Naziv");
+            return View();
+        }
+
+        // POST: Kanalis/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "KanalID,NazivKanala,Rezulucija,Slika,SlikaThumb,Status,VrsteKanalaID")] Kanali kanali)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Kanalis.Add(kanali);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.VrsteKanalaID = new SelectList(db.VrsteKanalas, "VrsteKanalaID", "Naziv", kanali.VrsteKanalaID);
+            return View(kanali);
+        }
+
+        // GET: Kanalis/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kanali kanali = await db.Kanalis.FindAsync(id);
+            if (kanali == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.VrsteKanalaID = new SelectList(db.VrsteKanalas, "VrsteKanalaID", "Naziv", kanali.VrsteKanalaID);
+            return View(kanali);
+        }
+
+        // POST: Kanalis/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "KanalID,NazivKanala,Rezulucija,Slika,SlikaThumb,Status,VrsteKanalaID")] Kanali kanali)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(kanali).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewBag.VrsteKanalaID = new SelectList(db.VrsteKanalas, "VrsteKanalaID", "Naziv", kanali.VrsteKanalaID);
+            return View(kanali);
+        }
+
+        // GET: Kanalis/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kanali kanali = await db.Kanalis.FindAsync(id);
+            if (kanali == null)
+            {
+                return HttpNotFound();
+            }
+            return View(kanali);
+        }
+
+        // POST: Kanalis/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Kanali kanali = await db.Kanalis.FindAsync(id);
+            db.Kanalis.Remove(kanali);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}
