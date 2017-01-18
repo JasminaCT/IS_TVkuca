@@ -1,0 +1,56 @@
+@*@model IEnumerable<BootstrapSite1.Models.Emisije>*@
+
+@model PagedList.IPagedList<BootstrapSite1.Models.Emisije>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="detaljiEmisije">
+
+</div>
+
+<div class="container" style="width:55%; margin-left:24%; margin-right:22%; fit-position:fill;">
+    <table class="table table-striped" style="background-color: azure; width:90%; position:center; border-radius:10px">
+        <tr>
+            <th style="text-align:center">Kanal</th>
+            <th style="text-align:center">Emisija</th>
+            <th style="text-align:center">Trajanje emitovanja</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Kanali.NazivKanala)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.VrijemeEmitovanja.Trajanje)min
+                </td>
+
+                <td style="text-align:center">
+                    @Ajax.ActionLink("DetaljiT", "Details", new { emisijaId = item.EmisijeID }, new AjaxOptions()
+                   {
+                       HttpMethod = "GET",
+                       UpdateTargetId = "detaljiEmisije",
+                       InsertionMode = InsertionMode.Replace
+                   })
+                </td>
+            </tr>
+        }
+        
+
+
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
