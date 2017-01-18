@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{77D53F01-4B27-4C87-882F-AEFD833CFC00}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TV_Kuca_UI</RootNamespace>
+    <AssemblyName>TV_Kuca_UI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alati\UI_Helper_Lozinke.cs" />
+    <Compile Include="Alati\Web_API_Helper.cs" />
+    <Compile Include="Channels\Administracija_Kanala.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Channels\Administracija_Kanala.Designer.cs">
+      <DependentUpon>Administracija_Kanala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Channels\Novi_Kanal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Channels\Novi_Kanal.Designer.cs">
+      <DependentUpon>Novi_Kanal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Clients\Administracija_Klijenata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Clients\Administracija_Klijenata.Designer.cs">
+      <DependentUpon>Administracija_Klijenata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Clients\Novi_klijent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Clients\Novi_klijent.Designer.cs">
+      <DependentUpon>Novi_klijent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Emissions\Emisija_Po_Kanalu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Emissions\Emisija_Po_Kanalu.Designer.cs">
+      <DependentUpon>Emisija_Po_Kanalu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Emissions\Nova_Emisija.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Emissions\Nova_Emisija.Designer.cs">
+      <DependentUpon>Nova_Emisija.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Administracija_Zaposlenika.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Administracija_Zaposlenika.Designer.cs">
+      <DependentUpon>Administracija_Zaposlenika.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Novi_Zaposlenik.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Novi_Zaposlenik.Designer.cs">
+      <DependentUpon>Novi_Zaposlenik.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Glavna_Forma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Glavna_Forma.Designer.cs">
+      <DependentUpon>Glavna_Forma.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="Izvještaj_Racun\Frm_Izvjestaj_Racun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Izvještaj_Racun\Frm_Izvjestaj_Racun.Designer.cs">
+      <DependentUpon>Frm_Izvjestaj_Racun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login_Forma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login_Forma.Designer.cs">
+      <DependentUpon>Login_Forma.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrdersDetails\Administracija_Stavki.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrdersDetails\Administracija_Stavki.Designer.cs">
+      <DependentUpon>Administracija_Stavki.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrdersDetails\Nova_stavka.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrdersDetails\Nova_stavka.Designer.cs">
+      <DependentUpon>Nova_stavka.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\Administracija_Narudzbi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orders\Administracija_Narudzbi.Designer.cs">
+      <DependentUpon>Administracija_Narudzbi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\Aktivne_Narudzbe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orders\Aktivne_Narudzbe.Designer.cs">
+      <DependentUpon>Aktivne_Narudzbe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\Detalji_Narudzbe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orders\Detalji_Narudzbe.Designer.cs">
+      <DependentUpon>Detalji_Narudzbe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\Nova_Narudzba.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orders\Nova_Narudzba.Designer.cs">
+      <DependentUpon>Nova_Narudzba.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\Racun_Izlaz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orders\Racun_Izlaz.Designer.cs">
+      <DependentUpon>Racun_Izlaz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Outputs\Administracija_Izlaza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Outputs\Administracija_Izlaza.Designer.cs">
+      <DependentUpon>Administracija_Izlaza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Outputs\Novi_Izlaz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Outputs\Novi_Izlaz.Designer.cs">
+      <DependentUpon>Novi_Izlaz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Poruke.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Poruke.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Promotions\Administracija_Reklama.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Promotions\Administracija_Reklama.Designer.cs">
+      <DependentUpon>Administracija_Reklama.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Promotions\Nova_Reklama.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Promotions\Nova_Reklama.Designer.cs">
+      <DependentUpon>Nova_Reklama.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Salary\Administracija_Plata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Salary\Administracija_Plata.Designer.cs">
+      <DependentUpon>Administracija_Plata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Salary\Unos_Plate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Salary\Unos_Plate.Designer.cs">
+      <DependentUpon>Unos_Plate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Administracija_Usluga.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Services\Administracija_Usluga.Designer.cs">
+      <DependentUpon>Administracija_Usluga.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Nova_Usluga.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Services\Nova_Usluga.Designer.cs">
+      <DependentUpon>Nova_Usluga.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TvKucaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TvKucaDataSet.xsd</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Channels\Administracija_Kanala.resx">
+      <DependentUpon>Administracija_Kanala.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Channels\Novi_Kanal.resx">
+      <DependentUpon>Novi_Kanal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Clients\Administracija_Klijenata.resx">
+      <DependentUpon>Administracija_Klijenata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Clients\Novi_klijent.resx">
+      <DependentUpon>Novi_klijent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Emissions\Emisija_Po_Kanalu.resx">
+      <DependentUpon>Emisija_Po_Kanalu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Emissions\Nova_Emisija.resx">
+      <DependentUpon>Nova_Emisija.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Administracija_Zaposlenika.resx">
+      <DependentUpon>Administracija_Zaposlenika.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Novi_Zaposlenik.resx">
+      <DependentUpon>Novi_Zaposlenik.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Glavna_Forma.resx">
+      <DependentUpon>Glavna_Forma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Izvještaj_Racun\Frm_Izvjestaj_Racun.resx">
+      <DependentUpon>Frm_Izvjestaj_Racun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login_Forma.resx">
+      <DependentUpon>Login_Forma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrdersDetails\Administracija_Stavki.resx">
+      <DependentUpon>Administracija_Stavki.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrdersDetails\Nova_stavka.resx">
+      <DependentUpon>Nova_stavka.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orders\Administracija_Narudzbi.resx">
+      <DependentUpon>Administracija_Narudzbi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orders\Aktivne_Narudzbe.resx">
+      <DependentUpon>Aktivne_Narudzbe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orders\Detalji_Narudzbe.resx">
+      <DependentUpon>Detalji_Narudzbe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orders\Nova_Narudzba.resx">
+      <DependentUpon>Nova_Narudzba.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orders\Racun_Izlaz.resx">
+      <DependentUpon>Racun_Izlaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Outputs\Administracija_Izlaza.resx">
+      <DependentUpon>Administracija_Izlaza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Outputs\Novi_Izlaz.resx">
+      <DependentUpon>Novi_Izlaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Poruke.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Poruke.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Promotions\Administracija_Reklama.resx">
+      <DependentUpon>Administracija_Reklama.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Promotions\Nova_Reklama.resx">
+      <DependentUpon>Nova_Reklama.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Salary\Administracija_Plata.resx">
+      <DependentUpon>Administracija_Plata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Salary\Unos_Plate.resx">
+      <DependentUpon>Unos_Plate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Services\Administracija_Usluga.resx">
+      <DependentUpon>Administracija_Usluga.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Services\Nova_Usluga.resx">
+      <DependentUpon>Nova_Usluga.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\TVKuća_API.Controllers.NarudzbeController.datasource" />
+    <None Include="Properties\DataSources\TVKuća_API.Models.esp_Izvjestaj_Racun_Result.datasource" />
+    <None Include="Properties\DataSources\TVKuća_API.Models.esp_Narudzbe_Aktivne2_Result.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="TvKucaDataSet.xsc">
+      <DependentUpon>TvKucaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="TvKucaDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TvKucaDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TvKucaDataSet.xss">
+      <DependentUpon>TvKucaDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add user add user new visitor client add user icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TVKuća_API\TV_Kuca_API.csproj">
+      <Project>{59fcbf0f-9613-442c-8e89-54cf04987179}</Project>
+      <Name>TV_Kuca_API</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add user add user new visitor client add user icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deaktivate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\images.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deaktivate1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add user add user new visitor client add user icon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_61.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_91.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot_11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reklama.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pozadinaTVkuce.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deaktivate2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\background-blue.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
