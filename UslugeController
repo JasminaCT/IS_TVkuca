@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using PagedList;
+using BootstrapSite1.Models;
+
+namespace BootstrapSite1.Controllers
+{
+    public class UslugeController : Controller
+    {
+        private Model1 db = new Model1();
+
+        // GET: Usluges1
+        public ViewResult Index(string currentFilter, string searchString, int? page)
+        {
+            var usluges = db.Usluges.Include(u => u.VrsteUsluga);
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(usluges.OrderBy(i => i.Naziv).ToPagedList(pageNumber, pageSize));
+        }
+
+        public IEnumerable<Zaposlenici> GetEmployeePage(int pageNumber, int pageSize, string searchCriteria)
+        {
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            return db.Zaposlenicis
+                .OrderBy(m => m.Ime)
+              .Skip((pageNumber - 1) * pageSize)
+              .Take(pageSize)
+              .ToList();
+        }
+
+        public class PagedEmployeeModel
+        {
+            public int TotalRows { get; set; }
+            public IEnumerable<Zaposlenici> Employee { get; set; }
+            public int PageSize { get; set; }
+        }
+
+        // GET: Usluges1/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Usluge usluge = db.Usluges.Find(id);
+            if (usluge == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(usluge);
+        }
+
+       
+    }
+}
