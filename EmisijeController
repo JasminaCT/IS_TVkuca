@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using BootstrapSite1.Models;
+using PagedList;
+
+namespace BootstrapSite1.Controllers
+{
+    public class EmisijesController : Controller
+    {
+        private Model1 db = new Model1();
+
+        // GET: Emisijes
+        public ViewResult Index(string currentFilter, string searchString, int? page)
+        {
+            var emisijes = db.Emisijes.Include(e => e.Kanali).Include(e => e.VrijemeEmitovanja).Include(e => e.Zaposlenici);
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            return View(emisijes.OrderBy(i => i.Naziv).ToPagedList(pageNumber, pageSize));
+            //return View(await emisijes.ToListAsync());
+        }
+
+        // GET: Emisijes/Details/5
+        public ActionResult Details(int? emisijaId)
+        {
+            if (emisijaId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Emisije emisije = db.Emisijes.Find(emisijaId);
+            if (emisije == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("Details",emisije);
+        }
+
+    
+    }
+}
