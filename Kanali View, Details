@@ -1,0 +1,38 @@
+@model BootstrapSite1.Models.Kanali
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="jumbotron" style="width:360px; margin-left:35%;margin-right:35%;border-radius:15px 15px; font-size:15px; vertical-align:central;">
+    <h5>Detalji</h5>
+    <h6>Kanala</h6>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt style="text-align:left">
+            Vrsta kanala
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.VrsteKanala.Naziv)
+        </dd>
+
+        <dt style="text-align:left">
+           Naziv kanala
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.NazivKanala)
+        </dd>
+
+        <dt style="text-align:left">
+            Rezolucija 
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.Rezulucija)px
+        </dd>
+
+    </dl>
+</div>
