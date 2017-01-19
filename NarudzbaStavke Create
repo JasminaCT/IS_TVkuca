@@ -1,0 +1,43 @@
+@model BootstrapSite1.Models.NarudzbaStavke
+
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="jumbotron" style="width: 20%; margin-left:40%; margin-right:40%; border-radius:15px 15px;height:250px; background-color:#e6e6ff; ">
+    @using (Html.BeginForm())
+    {
+        <h5>Dodaj u korpu</h5>
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                Naziv usluge: 
+
+                    @Html.LabelFor(model => model.UslugaID)
+
+            </div>
+
+            <div class="form-group">
+               Količina:
+               
+                    @Html.EditorFor(model => model.Kolicina)
+                    @Html.ValidationMessageFor(model => model.Kolicina)
+                
+            </div>
+
+            <div class="form-group" style="float:right">           
+                    <input type="submit" value="Dodaj" class="btn btn-primary" />            
+            </div>
+        </div>
+    }
+</div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
