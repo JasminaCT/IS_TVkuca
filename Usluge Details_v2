@@ -1,0 +1,72 @@
+@model BootstrapSite1.Models.Usluge
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div class="jumbotron" style="width:30%;vertical-align:middle; margin-left:35%; margin-right:35%; border-radius:15px 15px; height:320px; box-shadow:3px 3px 3px 3px #e8e8e8">
+    <h5>Detalji</h5>
+    <h6>Usluge</h6>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt style="text-align:left">
+            Vrsta usluge
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.VrsteUsluga.Naziv)
+        </dd>
+
+        <dt style="text-align:left">
+            Naziv usluge
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+        <dt style="text-align:left">
+            Šifra
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.Sifra)
+        </dd>
+
+        <dt style="text-align:left">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt style="text-align:left">
+            @Html.DisplayNameFor(model => model.Cijena)
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.Cijena) KM
+        </dd>
+
+        <dt style="text-align:left">
+            Prosječna ocjena
+        </dt>
+
+        <dd style="text-align:left">
+            @Html.DisplayFor(model => model.ProsjecnaOcjena)
+        </dd>
+        <br />
+        <dt>
+
+        </dt>
+        <dd>
+            @Html.ActionLink("Dodaj u korpu", "Create", "NarudzbaStavkes", new object { }, new { @class = "btn btn-primary btn-sm" })
+        </dd>
+
+    </dl>
+
+</div>
+
