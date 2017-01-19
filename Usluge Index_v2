@@ -1,0 +1,70 @@
+@model PagedList.IPagedList<BootstrapSite1.Models.Usluge>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="detaljiUsluge">
+
+</div>
+<div class="container" style="width:50%; margin-left:25%; margin-right:25%; fit-position:fill; background-color:#e6e6ff; border-radius:10px 10px">
+    <table class="table table-striped" style="background-color: #e6e6ff; width:100%; position:center; border-radius:10px 10px">
+        <tr style="font-size:15px">
+            <th style="text-align:center">
+                Slika
+            </th>
+            <th style=" text-align:center">
+                Vrsta usluge
+            </th>
+
+            <th style="text-align:center">
+                Naziv
+            </th>
+            <th style="text-align:center">
+                Cijena
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr style="font-size:15px">
+                <td style="text-align:center; padding-top:25px">
+                    @{
+            if (item.SlikaThumb != null)
+            {
+                string imageBase64 = Convert.ToBase64String(item.SlikaThumb);
+                string imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                <img src="@imageSrc" style="height:auto;width:auto;" />
+            }
+                    }
+                </td>
+                <td style="text-align:center; padding-top:50px">
+                    @Html.DisplayFor(modelItem => item.VrsteUsluga.Naziv)
+                </td>
+                <td style="text-align:center; padding-top:50px">
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+
+                <td style="text-align:center; padding-top:50px">
+                    @Html.DisplayFor(modelItem => item.Cijena)KM
+                </td>
+
+                <td style="text-align:center; padding-top:50px">
+                    @Ajax.ActionLink("Detalji", "Details", new { id = item.UslugaID }, new AjaxOptions()
+                   {
+                       HttpMethod = "GET",
+                       UpdateTargetId = "detaljiUsluge",
+                       InsertionMode = InsertionMode.Replace
+                   })
+                </td>
+            </tr>
+        }
+
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+<br />
