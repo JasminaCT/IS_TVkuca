@@ -1,0 +1,21 @@
+ public ActionResult Provjera(string username, string password, string zapamti)
+        {
+            Klijenti k = new Klijenti();
+            k = ctx.Klijentis.Where(x => x.KorisnickoIme == username).SingleOrDefault();
+
+                //.Where(x => x.KorisnickoIme == username && x.LozinkaSalt == password).SingleOrDefault();
+            if (k != null) 
+            { 
+                if (UI_Helper_Lozinke.GenerateHash(password, k.LozinkaSalt) == k.LozinkaHash)
+                {
+                    TrenutnoLogirani.Korisnik = k;
+                    return Redirect("/Home");
+                }
+                else
+                {
+                    //pogresno korisnicko ime ili lozinka
+                    return Redirect("/Login");
+                }
+            }
+            return Redirect("/Login");
+        }
