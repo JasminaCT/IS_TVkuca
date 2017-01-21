@@ -1,0 +1,14 @@
+ public ActionResult Create()
+        {
+            if (TrenutnoLogirani.Korisnik == null)
+            {
+                return Redirect("MessageLogin");
+            }
+            else 
+            { 
+                ViewBag.NarudzbaID = new SelectList(db.Narudzbes, "NarudzbaID", "BrojNarudzbe");
+                ViewBag.UslugaID = new SelectList(db.Usluges, "UslugaID", "Naziv");
+            }
+            return View();
+            
+        }
