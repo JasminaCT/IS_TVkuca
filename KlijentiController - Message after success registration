@@ -1,0 +1,101 @@
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Data.Entity;
+using System.Web.Routing;
+using BootstrapSite1.Models;
+using BootstrapSite1.ViewModels;
+
+namespace BootstrapSite1.Controllers
+{
+    public class KlijentiController : Controller
+    {
+        Model1 db = new Model1();
+        // GET: Klijenti
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        //uredi
+        public ActionResult Registracija()
+        {
+            UrediKlijenteVM model = new UrediKlijenteVM
+            {
+                listaGradova = UcitajGradove(),
+                listaVrsta = UcitajVrste()
+
+            };
+
+            return View("Registracija", model);
+        }
+
+        public ActionResult Dodaj()
+        {
+            return View();
+        }
+
+        public ActionResult Snimi(UrediKlijenteVM klijent)
+        {
+            if (!ModelState.IsValid)
+            {
+                klijent.listaVrsta = UcitajVrste();
+                klijent.listaGradova = UcitajGradove();
+                return View("Registracija", klijent);
+            }
+
+
+            Klijenti klijentDB;
+            if (klijent.Id == 0)
+            {
+                klijentDB = new Klijenti();
+                db.Klijentis.Add(klijentDB);
+            }
+            else
+            {
+                klijentDB = db.Klijentis
+                    .Where(s => s.KlijentID == klijent.Id)
+                    .FirstOrDefault();
+            }
+
+            klijentDB.DatumRegistracije = DateTime.Now;
+            klijentDB.NazivKlijenta = klijent.Naziv;
+            klijentDB.KorisnickoIme = klijent.KorisnickoIme;
+            klijentDB.LozinkaSalt = klijent.Lozinka;
+            klijentDB.LozinkaHash = klijent.Lozinka;
+            klijentDB.Adresa = klijent.Adresa;
+            klijentDB.Telefon = klijent.Telefon;
+            klijentDB.Email = klijent.Mail;
+            klijentDB.VrstaKlijentaID = klijent.VrstaKlijentaId;
+            klijentDB.GradID = klijent.GradId;
+            klijentDB.Status = true;
+            klijentDB.Mobitel = klijent.Telefon;
+            klijentDB.Fax = klijent.Telefon;
+
+
+            db.SaveChanges();
+            TempData["Success"] = klijentDB.KorisnickoIme + ", uspješno ste se registrovali!";
+            return RedirectToAction("Index", "Home", new object { });
+        }
+
+
+        private List<SelectListItem> UcitajGradove()
+        {
+            var gradovi = new List<SelectListItem>();
+            gradovi.Add(new SelectListItem { Value = null, Text = "Odaberite grad" });
+            gradovi.AddRange(db.Gradovis.Select(x => new SelectListItem { Value = x.GradID.ToString(), Text = x.NazivGrada }).OrderBy(x=>x.Text).ToList());
+            return gradovi;
+        }
+
+        private List<SelectListItem> UcitajVrste()
+        {
+            var vrste = new List<SelectListItem>();
+            vrste.Add(new SelectListItem { Value = null, Text = "Odaberite vrstu klijenta" });
+            vrste.AddRange(db.VrstaKlijenatas.Select(x => new SelectListItem { Value = x.VrstaKlijentaID.ToString(), Text = x.NazivVrsteKlijenta }).OrderBy(x => x.Text).ToList());
+            return vrste;
+        }
+    }
+}
