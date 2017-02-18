@@ -1,0 +1,181 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using BootstrapSite1.Models;
+using BootstrapSite1.Helper;
+
+namespace BootstrapSite1.Controllers
+{
+    public class NarudzbaStavkesController : Controller
+    {
+        private Model1 db = new Model1();
+        private BootstrapSite1.Models.Usluge usluge { get; set; }
+
+        // GET: NarudzbaStavkes
+        public async Task<ActionResult> Index()
+        {
+            var narudzbaStavkes = db.NarudzbaStavkes.Include(n => n.Narudzbe).Include(n => n.Usluge);
+            return View(await narudzbaStavkes.ToListAsync());
+        }       
+
+        // GET: NarudzbaStavkes/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            NarudzbaStavke narudzbaStavke = await db.NarudzbaStavkes.FindAsync(id);
+            if (narudzbaStavke == null)
+            {
+                return HttpNotFound();
+            }
+            return View(narudzbaStavke);
+        }
+
+        // GET: NarudzbaStavkes/Create
+        public ActionResult Create(int uslugaId)
+        {
+            if (TrenutnoLogirani.Korisnik == null)
+            {
+                return RedirectToAction("Index", "Login", new object { });
+            }
+            else 
+            {
+                Usluge u = db.Usluges.Where(x => x.UslugaID == uslugaId).FirstOrDefault();
+
+                ViewBag.NarudzbaID = new SelectList(db.Narudzbes, "NarudzbaID", "BrojNarudzbe");
+                ViewBag.NazivUsluge = u.Naziv;
+                ViewBag.UslugaID = u.UslugaID;
+
+            }
+            return View();
+            
+        }
+
+        // POST: NarudzbaStavkes/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "UslugaID,Kolicina")] NarudzbaStavke narudzbaStavke)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Global.aktivnaNarudzba == null)
+                {
+                    Global.aktivnaNarudzba = new Narudzbe();
+                    Global.aktivnaNarudzba.BrojNarudzbe = "1/" + DateTime.Now.Day;
+                    Global.aktivnaNarudzba.Datum = DateTime.Now;
+                    Global.aktivnaNarudzba.KlijentID = TrenutnoLogirani.Korisnik.KlijentID;
+                }
+
+                usluge=db.Usluges.Where(x=>x.UslugaID==narudzbaStavke.UslugaID).FirstOrDefault();
+                bool vecPostoji = false;
+                foreach (NarudzbaStavke item in Global.aktivnaNarudzba.NarudzbaStavkes)
+                {
+                    if (usluge.UslugaID == item.UslugaID)
+                    {
+                        item.Kolicina += Convert.ToInt32(Request.Form["Kolicina"]);
+                        vecPostoji = true;
+                        break;
+                    }
+                }
+
+                NarudzbaStavke ns = new NarudzbaStavke();
+                ns.UslugaID = usluge.UslugaID;
+                ns.Usluge = usluge;
+
+
+                ns.Kolicina = Convert.ToInt32(Request.Form["Kolicina"]);
+                Global.aktivnaNarudzba.NarudzbaStavkes.Add(ns);
+                
+            }
+            return RedirectToAction("Index", "Narudzbe", new object { });
+        }
+
+        // GET: NarudzbaStavkes/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            //samo aktivnu narudzbu je moguce mijenjati
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            NarudzbaStavke narudzbaStavke = await db.NarudzbaStavkes.FindAsync(id);
+            if (narudzbaStavke == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.NarudzbaID = new SelectList(db.Narudzbes, "NarudzbaID", "BrojNarudzbe", narudzbaStavke.NarudzbaID);
+            ViewBag.UslugaID = new SelectList(db.Usluges, "UslugaID", "Naziv", narudzbaStavke.UslugaID);
+            return View(narudzbaStavke);
+        }
+
+        // POST: NarudzbaStavkes/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "NarudzbaStavkaID,NarudzbaID,UslugaID,Kolicina")] NarudzbaStavke narudzbaStavke)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(narudzbaStavke).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewBag.NarudzbaID = new SelectList(db.Narudzbes, "NarudzbaID", "BrojNarudzbe", narudzbaStavke.NarudzbaID);
+            ViewBag.UslugaID = new SelectList(db.Usluges, "UslugaID", "Naziv", narudzbaStavke.UslugaID);
+            return View(narudzbaStavke);
+        }
+
+        // GET: NarudzbaStavkes/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            NarudzbaStavke narudzbaStavke = await db.NarudzbaStavkes.FindAsync(id);
+            if (narudzbaStavke == null)
+            {
+                return HttpNotFound();
+            }
+            return View(narudzbaStavke);
+        }
+
+        // POST: NarudzbaStavkes/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            NarudzbaStavke narudzbaStavke = await db.NarudzbaStavkes.FindAsync(id);
+            db.NarudzbaStavkes.Remove(narudzbaStavke);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        public ActionResult MessageLogin()
+        {
+            return PartialView();
+        }
+   
+    }
+}
