@@ -1,0 +1,7 @@
+
+<div class="container">
+    @if (TempData["NarudzbaNull"] != null)
+    {
+        <p class="alert alert-warning" style="width:25%; margin-left:auto; margin-right:inherit">@TempData["NarudzbaNull"]</p>
+    }
+</div>
