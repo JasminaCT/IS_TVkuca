@@ -1,0 +1,44 @@
+
+using BootstrapSite1.Helper;
+using BootstrapSite1.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace BootstrapSite1.Controllers
+{
+    public class NarudzbeController : Controller
+    {
+        // GET: Narudzbe
+        public string Logirani { get; set; }
+        Model1 db = new Model1();
+
+        public ActionResult Index()
+        {
+            List<NarudzbaStavke> narudzba = new List<NarudzbaStavke>();
+            if (Global.aktivnaNarudzba != null)
+            {
+                narudzba = Global.aktivnaNarudzba.NarudzbaStavkes.ToList();
+                return View(narudzba);
+            }
+            else
+            {
+                TempData["NarudzbaNull"] = "Vaša korpa je trenutno prazna!";
+                return RedirectToAction("Empty", "Narudzbe", new object { });
+            }
+        }
+
+        public ActionResult Empty()
+        {
+            return View();
+        }
+
+        public ActionResult Dodaj()
+        {
+          
+                return View();
+        }
+    }
+}
